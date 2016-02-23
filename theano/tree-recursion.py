@@ -12,7 +12,7 @@ def numpy_combine(t, co, W):
     return t[co[-1][0]]
 
 
-def theano_combine(t, co, W, Ttmp):
+def theano_combine(t, co, W):
 
     def combine_step(coi, t, W):
         v1, v2 = t[coi[0]], t[coi[1]]
@@ -42,9 +42,8 @@ def test_theano():
     CombOrd = T.imatrix('combination_order')
 
     W = theano.shared(W_init, 'W')
-    Ttmp = theano.shared(np.zeros_like(tree))
 
-    result, updates = theano_combine(Tree, CombOrd, W, Ttmp)
+    result, updates = theano_combine(Tree, CombOrd, W)
 
     theano_comb_func = theano.function([Tree, CombOrd], result, updates=updates)
 
